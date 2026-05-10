@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Slip Generator</title>
+  <meta name="description" content="Generate printable A4 name slips for students with photo, class, and roll number fields.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+  <div class="app">
+    <!-- Left Panel -->
+    <div class="panel-left">
+
+      <div class="card">
+        <h1 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Name Slip Generator
+        </h1>
+
+        <div class="form-group">
+          <label>Photo (Optional)</label>
+          <div class="photo-row">
+            <div class="photo-preview" id="photoPreview">
+              <span class="photo-placeholder" id="photoPlaceholder">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </span>
+              <img id="photoImg" src="" alt="">
+              <button class="photo-remove-btn" id="photoRemoveBtn" title="Remove">&times;</button>
+            </div>
+            <label class="upload-btn">
+              Upload Image
+              <input type="file" accept="image/*" id="fileInput" hidden>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nameInput">Name *</label>
+          <input type="text" id="nameInput" placeholder="e.g. Shiza Farha">
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="classInput">Class</label><input type="text" id="classInput" placeholder="e.g. 6"></div>
+          <div class="form-group"><label for="sectionInput">Section</label><input type="text" id="sectionInput" placeholder="e.g. A"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="rollInput">Roll No.</label><input type="text" id="rollInput" placeholder="e.g. 24"></div>
+          <div class="form-group"><label for="subjectInput">Subject</label><input type="text" id="subjectInput" placeholder="e.g. Math"></div>
+        </div>
+        <div class="form-group">
+          <label for="schoolInput">School Name</label>
+          <input type="text" id="schoolInput" placeholder="e.g. Marion Villa">
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" id="addBtn">+ Add Slip</button>
+          <button class="btn btn-outline" id="fillBtn" title="Fill whole page with the first slip">⊞ Fill Page</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="list-header">
+          <h2>Added Slips <span id="slipCount" class="slip-count">(0)</span></h2>
+          <button class="link-btn-danger" id="clearAllBtn">Clear All</button>
+        </div>
+        <div id="slipList" class="slip-list">
+          <p class="empty-msg" id="emptyMsg">No slips added yet.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="btn btn-download" id="downloadBtn" disabled>⬇ Download A4 PDF</button>
+      </div>
+    </div>
+
+    <!-- Right Panel: Preview -->
+    <div class="panel-right">
+      <div class="preview-header">
+        <h2>A4 Print Layout</h2>
+        <p>Standard A4 · 210 × 297 mm</p>
+      </div>
+      <div class="preview-container" id="previewContainer">
+        <div class="a4-page" id="a4Page"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crop Modal -->
+  <div class="modal-overlay" id="cropModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Crop Image</h3>
+        <button class="modal-close" id="cropCancelX">&times;</button>
+      </div>
+      <div class="crop-viewport" id="cropViewport">
+        <canvas id="cropCanvas"></canvas>
+        <div class="crop-frame" id="cropFrame"></div>
+      </div>
+      <div class="modal-footer">
+        <label class="zoom-label">Zoom</label>
+        <input type="range" id="cropZoom" min="100" max="300" value="100" class="zoom-slider">
+        <div class="modal-actions">
+          <button class="btn btn-outline" id="cropCancelBtn">Cancel</button>
+          <button class="btn btn-primary" id="cropConfirmBtn">Crop & Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
