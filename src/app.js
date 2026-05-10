@@ -1,6 +1,5 @@
-/* ── Constants ── */
-const PAGE_W = 1587, PAGE_H = 1123, SLIP_W = 264, SLIP_H = 160;
-const COLS = 6, ROWS = 7, MAX_SLIPS = COLS * ROWS;
+const PAGE_W = 1587, PAGE_H = 1123, SLIP_W = 317, SLIP_H = 225;
+const COLS = 5, ROWS = 5, MAX_SLIPS = COLS * ROWS;
 
 /* ── State ── */
 let slips = [];
