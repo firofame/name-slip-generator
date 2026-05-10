@@ -289,8 +289,9 @@ downloadBtn.addEventListener('click', async () => {
 
     a3Page.style.transform = prevTransform;
 
+    const baseName = slips[0]?.name ? slips[0].name.trim().replace(/\s+/g, '-') : 'A3';
     const link = document.createElement('a');
-    link.download = 'A3-Name-Slips.jpg';
+    link.download = `${baseName}-Name-Slips.jpg`;
     link.href = imgData;
     link.click();
   } catch (err) {
