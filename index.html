@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Name Slip Generator</title>
-  <meta name="description" content="Generate printable A4 name slips for students with photo, class, and roll number fields.">
+  <meta name="description" content="Generate printable A3 name slips for students with photo, class, and roll number fields.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" crossorigin="anonymous">
   <link rel="stylesheet" href="/src/style.css">
@@ -72,18 +72,18 @@
       </div>
 
       <div class="card">
-        <button class="btn btn-download" id="downloadBtn" disabled>⬇ Download A4 PDF</button>
+        <button class="btn btn-download" id="downloadBtn" disabled>⬇ Download A3 Image</button>
       </div>
     </div>
 
     <!-- Right Panel: Preview -->
     <div class="panel-right">
       <div class="preview-header">
-        <h2>A4 Print Layout</h2>
-        <p>Standard A4 · 210 × 297 mm</p>
+        <h2>A3 Print Layout</h2>
+        <p>Standard A3 Landscape · 420 × 297 mm</p>
       </div>
       <div class="preview-container" id="previewContainer">
-        <div class="a4-page" id="a4Page"></div>
+        <div class="a3-page" id="a3Page"></div>
       </div>
     </div>
   </div>
@@ -110,7 +110,6 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
   <script type="module" src="/src/app.js"></script>
 </body>

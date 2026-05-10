@@ -205,9 +205,9 @@ body {
   padding: 32px 16px;
 }
 
-/* ── A4 Page ── */
-.a4-page {
-  width: 794px; height: 1123px;
+/* ── A3 Page ── */
+.a3-page {
+  width: 1587px; height: 1123px;
   background: #fff;
   box-shadow: 0 8px 30px rgba(0,0,0,.12);
   display: flex;
@@ -218,7 +218,7 @@ body {
   flex-shrink: 0;
 }
 
-/* ── Individual Slip (on the A4 page) ── */
+/* ── Individual Slip (on the A3 page) ── */
 .slip {
   width: 264px; height: 160px;
   background: #FCF6E8;

@@ -1,6 +1,6 @@
 /* ── Constants ── */
-const PAGE_W = 794, PAGE_H = 1123, SLIP_W = 264, SLIP_H = 160;
-const COLS = 3, ROWS = 7, MAX_SLIPS = COLS * ROWS;
+const PAGE_W = 1587, PAGE_H = 1123, SLIP_W = 264, SLIP_H = 160;
+const COLS = 6, ROWS = 7, MAX_SLIPS = COLS * ROWS;
 
 /* ── State ── */
 let slips = [];
@@ -22,7 +22,7 @@ const slipCount = $('slipCount');
 const clearAllBtn = $('clearAllBtn');
 const emptyMsg = $('emptyMsg');
 const downloadBtn = $('downloadBtn');
-const a4Page = $('a4Page');
+const a3Page = $('a3Page');
 const previewContainer = $('previewContainer');
 
 /* ═══════════════════════════════════
@@ -224,8 +224,8 @@ function renderSlipHTML(s) {
 }
 
 function render() {
-  // A4 preview
-  a4Page.innerHTML = slips.map(renderSlipHTML).join('');
+  // A3 preview
+  a3Page.innerHTML = slips.map(renderSlipHTML).join('');
   updateScale();
 
   // Sidebar list
@@ -262,25 +262,25 @@ function render() {
 function updateScale() {
   const containerW = previewContainer.clientWidth - 64;
   const scale = Math.min(1, containerW / PAGE_W);
-  a4Page.style.transform = `scale(${scale})`;
-  a4Page.style.marginBottom = `${(PAGE_H * scale) - PAGE_H}px`;
+  a3Page.style.transform = `scale(${scale})`;
+  a3Page.style.marginBottom = `${(PAGE_H * scale) - PAGE_H}px`;
 }
 window.addEventListener('resize', updateScale);
 updateScale();
 
 /* ═══════════════════════════════════
-   PDF Download
+   Image Download
    ═══════════════════════════════════ */
 downloadBtn.addEventListener('click', async () => {
   if (!slips.length) return;
   downloadBtn.disabled = true;
-  downloadBtn.textContent = '⏳ Generating PDF…';
+  downloadBtn.textContent = '⏳ Generating Image…';
 
   try {
-    const prevTransform = a4Page.style.transform;
-    a4Page.style.transform = 'none';
+    const prevTransform = a3Page.style.transform;
+    a3Page.style.transform = 'none';
 
-    const imgData = await htmlToImage.toJpeg(a4Page, {
+    const imgData = await htmlToImage.toJpeg(a3Page, {
       quality: 0.95,
       backgroundColor: '#ffffff',
       width: PAGE_W,
@@ -288,18 +288,18 @@ downloadBtn.addEventListener('click', async () => {
       pixelRatio: 2,
     });
 
-    a4Page.style.transform = prevTransform;
+    a3Page.style.transform = prevTransform;
 
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-    pdf.save('A4-Name-Slips.pdf');
+    const link = document.createElement('a');
+    link.download = 'A3-Name-Slips.jpg';
+    link.href = imgData;
+    link.click();
   } catch (err) {
     console.error(err);
-    alert('Failed to generate PDF.');
+    alert('Failed to generate image.');
   } finally {
     downloadBtn.disabled = slips.length === 0;
-    downloadBtn.textContent = '⬇ Download A4 PDF';
+    downloadBtn.textContent = '⬇ Download A3 Image';
   }
 });
 
